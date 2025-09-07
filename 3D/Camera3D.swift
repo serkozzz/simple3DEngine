@@ -8,17 +8,33 @@
 import simd
 
 class Camera3D {
-    var viewMatrix = matrix_identity_float4x4
-    var perspectiveMatrix = matrix_identity_float4x4
     
-    init(viewMatrix: simd_float4x4, perspectiveMatrix: simd_float4x4) {
-        self.viewMatrix = viewMatrix
-        self.perspectiveMatrix = perspectiveMatrix
+    var position: SIMD3<Float>
+    var yaw: Float = 0 // Вращение вокруг Y (горизонт)
+    var pitch: Float = 0 // Вращение вокруг X (вертикаль)
+    var fovy: Float
+
+    
+    init(position: SIMD3<Float>, fovy: Float, aspect: Float, near: Float, far: Float) {
+        self.position = position
+        self.fovy = fovy
+        self.viewMatrix = matrix_identity_float4x4
+        self.perspectiveMatrix = float4x4(perspectiveProjection: fovy, aspect: aspect, near: near, far: far)
+        updateViewMatrix()
     }
     
+    func updateViewMatrix() {
+        let rotation = float4x4(rotationYXZ: SIMD3(-pitch, -yaw, 0))
+        let translation = float4x4(translation: -position)
+        self.viewMatrix = rotation * translation
+    }
+    
+    
+    private(set) var viewMatrix = matrix_identity_float4x4
+    private(set) var perspectiveMatrix = matrix_identity_float4x4
+    
+    
     static let `default`: Camera3D = {
-        var projectionMatrix = float4x4(perspectiveProjection: Float.pi / 4, aspect: 1, near: 0.1, far: 100)
-        var viewMatrix = float4x4(translation: [0, 0, -5])
-        return Camera3D(viewMatrix: viewMatrix, perspectiveMatrix: projectionMatrix)
+        return Camera3D(position: [0,0,-5], fovy: Float.pi / 4, aspect: 1, near: 0.1, far: 100)
     }()
 }
