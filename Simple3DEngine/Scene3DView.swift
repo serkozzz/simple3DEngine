@@ -14,12 +14,13 @@ struct Scene3DView: View {
     @State private var viewportSize: CGSize?
     @State private var dragOffset: CGSize = .zero
     
-    @State private var camZ: Float = 0
+    @State private var camXZ = AnimatablePair<Float, Float>(0,0)
     
     var body: some View {
         VStack {
-            AnimatableEmitter(value: camZ) { newValue in
-                scene3D.camera.position.z = newValue
+            AnimatableEmitter(value: camXZ) { newValue in
+                scene3D.camera.position.x = newValue.first
+                scene3D.camera.position.z = newValue.second
                 print("newValue: \(newValue)")
                 renderFrame()
             }
@@ -61,9 +62,10 @@ struct Scene3DView: View {
         }
     }
     func moveCamera(dx: Float = 0, dz: Float = 0) {
-        camZ = scene3D.camera.position.z
+        camXZ = AnimatablePair(scene3D.camera.position.x,
+            scene3D.camera.position.z)
         withAnimation(.easeInOut(duration: 1)) {
-            camZ += dz
+            camXZ = AnimatablePair(camXZ.first + dx, camXZ.second + dz)
         }
     }
     
