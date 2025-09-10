@@ -10,9 +10,10 @@ import Foundation
 class Engine3D {
     
     //result in [-1:1]
-    func objects2D(from scene: Scene3D, screenSize: CGSize) -> [Object2D] {
+    func objects2D(from scene: Scene3D, viewport: CGSize) -> [Object2D] {
         var result: [Object2D] = []
         let camera = scene.camera
+        camera.setAspect(aspect: Float (viewport.width / viewport.height))
         for node in scene.nodes {
             let transformationMatrix = node.transformationMatrix
             let viewMatrix = camera.viewMatrix
@@ -28,9 +29,10 @@ class Engine3D {
                 let projected = perspectiveMatrix * positionInViewSpace
                 let normalized = projected / projected.w
     
+//                print(normalized)
                 let resultPoint: CGPoint = CGPoint(
-                    x: CGFloat((normalized.x + 1) * 0.5 * Float(screenSize.width)),
-                    y: CGFloat((1 - normalized.y) * 0.5 * Float(screenSize.height))
+                    x: CGFloat((normalized.x + 1) * 0.5 * Float(viewport.width)),
+                    y: CGFloat((1 - normalized.y) * 0.5 * Float(viewport.height))
                 )
                 
                 resultPoints.append(resultPoint)
