@@ -82,18 +82,20 @@ struct Scene3DView: Animatable, View {
     @State private var object2D: Object2D?
     @State private var viewportSize: CGSize = CGSize(width: 400, height: 400)
     
-    var cameraX: Float
-    var cameraZ: Float
+    @State var cameraX: Float
+    @State var cameraZ: Float
     
     var animatableData: AnimatablePair<Float, Float>  {
         get { AnimatablePair(cameraX, cameraZ) }
         set {
-            cameraX = newValue.first
-            cameraZ = newValue.second
-            scene3D.camera.position.x = newValue.first
-            scene3D.camera.position.z = newValue.second
-            renderFrame()
-            print("animatableData set \(scene3D.camera.position.x), \(scene3D.camera.position.z) ")
+            DispatchQueue.main.async { [self] in
+                cameraX = newValue.first
+                cameraZ = newValue.second
+                scene3D.camera.position.x = newValue.first
+                scene3D.camera.position.z = newValue.second
+                renderFrame()
+                print("animatableData set \(scene3D.camera.position.x), \(scene3D.camera.position.z) ")
+            }
         }
     }
     
@@ -127,14 +129,13 @@ struct Scene3DView: Animatable, View {
     }
     
     func renderFrame() {
-        
-       //guard let viewportSize else  { return }
-        print("self:", Unmanaged.passUnretained(self as AnyObject).toOpaque())
-        let result = engine3D.objects2D(from: scene3D, viewport: viewportSize).first
-        print(result)
-        object2D = result
-        print("self:", Unmanaged.passUnretained(self as AnyObject).toOpaque())
-        print(object2D)
+            //guard let viewportSize else  { return }
+            print("self:", Unmanaged.passUnretained(self as AnyObject).toOpaque())
+            let result = engine3D.objects2D(from: scene3D, viewport: viewportSize).first
+            print(result)
+            object2D = result
+            print("self:", Unmanaged.passUnretained(self as AnyObject).toOpaque())
+            print(object2D)
     }
     
     
