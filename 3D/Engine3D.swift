@@ -42,4 +42,4 @@ class Engine3D {
 }
 
 
-let engine3D = Engine3D()
+@MainActor let engine3D = Engine3D()

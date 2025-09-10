@@ -18,7 +18,7 @@ class Scene3D {
 
 extension Scene3D {
     
-    static let quad = {
+    nonisolated(unsafe) static let quad = {
         let vertexes = [
             Vertex3D(position: SIMD3(-1, -1, 0)),
             Vertex3D(position: SIMD3(-1, 1, 0)),
