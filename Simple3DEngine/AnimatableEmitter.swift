@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AnimatableEmitter: View, Animatable {
-    var value: Double // конечное значение (куда хотим прийти)
-    var onValueChange: (Double) -> Void
+    var value: Float // конечное значение (куда хотим прийти)
+    var onValueChange: (Float) -> Void
 
     // это "живое" анимируемое значение
-    nonisolated var animatableData: Double {
+    nonisolated var animatableData: Float {
         get { value }
         set {
             DispatchQueue.main.async { [self] in
@@ -29,8 +29,8 @@ struct AnimatableEmitter: View, Animatable {
 
 
 struct AnimatableEmitterSample: View {
-    @State private var current: Double = 0
-    @State private var target: Double = 100
+    @State private var current: Float = 0
+    @State private var target: Float = 100
 
     var body: some View {
         VStack(spacing: 20) {

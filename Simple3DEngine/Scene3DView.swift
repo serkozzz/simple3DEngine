@@ -18,6 +18,11 @@ struct Scene3DView: View {
     
     var body: some View {
         VStack {
+            AnimatableEmitter(value: camZ) { newValue in
+                scene3D.camera.position.z = newValue
+                print("newValue: \(newValue)")
+                renderFrame()
+            }
             Group {
                 if let object2D {
                     ShapeFrom3D(object2D: object2D)
@@ -31,65 +36,61 @@ struct Scene3DView: View {
                 
             }
             .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        let camera = scene3D.camera
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            camera.yaw -= Float(value.translation.width - dragOffset.width) * 0.01
-                            camera.pitch -= Float(value.translation.height - dragOffset.height) * 0.01
-                            camera.updateViewMatrix()
-                            dragOffset = value.translation
-                            renderFrame()
-                        }
-                    }
-                    .onEnded { _ in
-//                        dragOffset = .zero
-                    }
+                dragGesture
            )
             joystick
         }
         .padding()
     }
     
-    func renderFrame() {
-        guard let viewportSize else  { return }
-        object2D = engine3D.objects2D(from: scene3D, screenSize: CGSize(width: viewportSize.width, height: viewportSize.width)).first
-        print(object2D)
-    }
     
     private var joystick: some View {
         HStack {
             Button("Forward") {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    scene3D.camera.position.z -= 0.5
-                    scene3D.camera.updateViewMatrix()
-                    renderFrame()
-                    
-                }
+                moveCamera(dz: 0.5)
             }
             Button("Backward") {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    scene3D.camera.position.z += 0.5
-                    scene3D.camera.updateViewMatrix()
-                    renderFrame()
-                }
+                moveCamera(dz: -0.5)
             }
             Button("Left") {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    scene3D.camera.position.x -= 0.5
-                    scene3D.camera.updateViewMatrix()
-                    renderFrame()
-                }
+                moveCamera(dx: -0.5)
             }
             Button("Right") {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    scene3D.camera.position.x += 0.5
-                    scene3D.camera.updateViewMatrix()
-                    renderFrame()
-                }
+                moveCamera(dx: 0.5)
             }
         }
     }
+    func moveCamera(dx: Float = 0, dz: Float = 0) {
+        camZ = scene3D.camera.position.z
+        withAnimation(.easeInOut(duration: 1)) {
+            camZ += dz
+        }
+    }
+    
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                let camera = scene3D.camera
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    camera.yaw -= Float(value.translation.width - dragOffset.width) * 0.01
+                    camera.pitch -= Float(value.translation.height - dragOffset.height) * 0.01
+                    dragOffset = value.translation
+                    renderFrame()
+                }
+            }
+            .onEnded { _ in
+                dragOffset = .zero
+            }
+    }
+    
+    func renderFrame() {
+        guard let viewportSize else  { return }
+        let res = engine3D.objects2D(from: scene3D, screenSize: CGSize(width: viewportSize.width, height: viewportSize.width)).first
+        print(res)
+        object2D = res
+        print(object2D)
+    }
+
 }
 
 #Preview {
