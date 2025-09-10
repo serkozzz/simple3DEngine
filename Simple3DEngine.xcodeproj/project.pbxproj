@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D3347BC2E6D0FE70075A381 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347B52E6D0FE70075A381 /* ContentView.swift */; };
+		9D3347BC2E6D0FE70075A381 /* Scene3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347B52E6D0FE70075A381 /* Scene3DView.swift */; };
 		9D3347BD2E6D0FE70075A381 /* Engine3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347B62E6D0FE70075A381 /* Engine3D.swift */; };
 		9D3347BE2E6D0FE70075A381 /* Object2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347B72E6D0FE70075A381 /* Object2D.swift */; };
 		9D3347BF2E6D0FE70075A381 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347B82E6D0FE70075A381 /* Object3D.swift */; };
@@ -19,12 +19,13 @@
 		9D3347CA2E6D120F0075A381 /* SceneNode3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347C92E6D120A0075A381 /* SceneNode3D.swift */; };
 		9D3347CC2E6D1A2B0075A381 /* Scene3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347CB2E6D1A270075A381 /* Scene3D.swift */; };
 		9D3347D02E6D1CBD0075A381 /* ShapeFrom3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */; };
+		9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9D33479A2E6D0DE50075A381 /* Simple3DEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simple3DEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3347B42E6D0FE70075A381 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9D3347B52E6D0FE70075A381 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9D3347B52E6D0FE70075A381 /* Scene3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene3DView.swift; sourceTree = "<group>"; };
 		9D3347B62E6D0FE70075A381 /* Engine3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine3D.swift; sourceTree = "<group>"; };
 		9D3347B72E6D0FE70075A381 /* Object2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object2D.swift; sourceTree = "<group>"; };
 		9D3347B82E6D0FE70075A381 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
@@ -35,6 +36,7 @@
 		9D3347C92E6D120A0075A381 /* SceneNode3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNode3D.swift; sourceTree = "<group>"; };
 		9D3347CB2E6D1A270075A381 /* Scene3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene3D.swift; sourceTree = "<group>"; };
 		9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeFrom3D.swift; sourceTree = "<group>"; };
+		9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableEmitter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +70,10 @@
 		9D3347BB2E6D0FE70075A381 /* Simple3DEngine */ = {
 			isa = PBXGroup;
 			children = (
+				9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */,
 				9D3347B42E6D0FE70075A381 /* Assets.xcassets */,
 				9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */,
-				9D3347B52E6D0FE70075A381 /* ContentView.swift */,
+				9D3347B52E6D0FE70075A381 /* Scene3DView.swift */,
 				9D3347BA2E6D0FE70075A381 /* Simple3DEngineApp.swift */,
 			);
 			path = Simple3DEngine;
@@ -171,8 +174,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D3347BC2E6D0FE70075A381 /* ContentView.swift in Sources */,
+				9D3347BC2E6D0FE70075A381 /* Scene3DView.swift in Sources */,
 				9D3347C82E6D11840075A381 /* Camera3D.swift in Sources */,
+				9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */,
 				9D3347BD2E6D0FE70075A381 /* Engine3D.swift in Sources */,
 				9D3347C62E6D10D50075A381 /* float4x4.swift in Sources */,
 				9D3347BE2E6D0FE70075A381 /* Object2D.swift in Sources */,

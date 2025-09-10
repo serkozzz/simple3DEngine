@@ -7,11 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Scene3DView: View {
     @State private var object2D: Object2D?
     @State private var scene3D: Scene3D = Scene3D.quad
+    
     @State private var viewportSize: CGSize?
     @State private var dragOffset: CGSize = .zero
+    
+    @State private var camZ: Float = 0
     
     var body: some View {
         VStack {
@@ -90,5 +93,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    Scene3DView()
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct Simple3DEngineApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Scene3DView()
         }
     }
 }
