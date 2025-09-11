@@ -6,6 +6,7 @@
 //
 import Foundation
 
-struct Object2D {
+struct Object2D : Identifiable {
     var points: [CGPoint]
+    var id = UUID()
 }
