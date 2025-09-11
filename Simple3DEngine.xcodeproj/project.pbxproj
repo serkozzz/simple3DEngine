@@ -20,6 +20,7 @@
 		9D3347CC2E6D1A2B0075A381 /* Scene3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347CB2E6D1A270075A381 /* Scene3D.swift */; };
 		9D3347D02E6D1CBD0075A381 /* ShapeFrom3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */; };
 		9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */; };
+		9DF9E4C32E725767004FD61D /* Camera3DController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C22E725767004FD61D /* Camera3DController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		9D3347CB2E6D1A270075A381 /* Scene3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene3D.swift; sourceTree = "<group>"; };
 		9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeFrom3D.swift; sourceTree = "<group>"; };
 		9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableEmitter.swift; sourceTree = "<group>"; };
+		9DF9E4C22E725767004FD61D /* Camera3DController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera3DController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				9D3347B42E6D0FE70075A381 /* Assets.xcassets */,
 				9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */,
 				9D3347B52E6D0FE70075A381 /* Scene3DView.swift */,
+				9DF9E4C22E725767004FD61D /* Camera3DController.swift */,
 				9D3347BA2E6D0FE70075A381 /* Simple3DEngineApp.swift */,
 			);
 			path = Simple3DEngine;
@@ -185,6 +188,7 @@
 				9D3347CC2E6D1A2B0075A381 /* Scene3D.swift in Sources */,
 				9D3347D02E6D1CBD0075A381 /* ShapeFrom3D.swift in Sources */,
 				9D3347C02E6D0FE70075A381 /* Vertex3D.swift in Sources */,
+				9DF9E4C32E725767004FD61D /* Camera3DController.swift in Sources */,
 				9D3347C12E6D0FE70075A381 /* Simple3DEngineApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
