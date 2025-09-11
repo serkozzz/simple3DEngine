@@ -7,11 +7,10 @@
 
 import simd
 
-
 final class Camera3D {
     var position: SIMD3<Float> { didSet { updateViewMatrix() } }
-    var yaw: Float = 0   { didSet { updateViewMatrix() } } // вокруг Y (мир)
-    var pitch: Float = 0 { didSet { updateViewMatrix() } } // вокруг локального right
+    var yaw: Float = 0   { didSet { updateViewMatrix() } } // вращение вокруг Y (горизонт)
+    var pitch: Float = 0 { didSet { updateViewMatrix() } } // вращение вокруг локального right
 
     private var fovy: Float
     private var aspect: Float
@@ -45,19 +44,24 @@ final class Camera3D {
         let cp = cos(pitch), sp = sin(pitch)
         let cy = cos(yaw),   sy = sin(yaw)
 
-        // Направление взгляда (front). При yaw=0,pitch=0 → (0,0,1), т.е. +Z
-        let front = simd_normalize(SIMD3<Float>( sy*cp, sp, cy*cp ))
+        // Теперь "вперёд" = −Z при yaw=0, pitch=0
+        let front = simd_normalize(SIMD3<Float>( sy*cp, sp, -cy*cp ))
         let up    = SIMD3<Float>(0, 1, 0)
-        
+
         viewMatrix = float4x4(lookFrom: position, to: position + front, up: up)
     }
 
     private func updatePerspectiveMatrix() {
-        perspectiveMatrix = float4x4(perspectiveProjection: fovy, aspect: aspect, near: near, far: far)
+        perspectiveMatrix = float4x4(
+            perspectiveProjection: fovy,
+            aspect: aspect,
+            near: near,
+            far: far
+        )
     }
 
     nonisolated(unsafe) static let `default`: Camera3D = {
-        Camera3D(position: [0,0,-5], fovy: .pi/6, aspect: 1, near: 0.1, far: 100)
+        Camera3D(position: [0, 0, 5], fovy: .pi/6, aspect: 1, near: 0.5, far: 100)
     }()
 }
 

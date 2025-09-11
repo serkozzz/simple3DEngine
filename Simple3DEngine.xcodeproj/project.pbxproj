@@ -21,6 +21,7 @@
 		9D3347D02E6D1CBD0075A381 /* ShapeFrom3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */; };
 		9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */; };
 		9DF9E4C32E725767004FD61D /* Camera3DController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C22E725767004FD61D /* Camera3DController.swift */; };
+		9DF9E4C52E7277B7004FD61D /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C42E7277B3004FD61D /* Clip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeFrom3D.swift; sourceTree = "<group>"; };
 		9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableEmitter.swift; sourceTree = "<group>"; };
 		9DF9E4C22E725767004FD61D /* Camera3DController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera3DController.swift; sourceTree = "<group>"; };
+		9DF9E4C42E7277B3004FD61D /* Clip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +102,18 @@
 				9D3347B82E6D0FE70075A381 /* Object3D.swift */,
 				9D3347B92E6D0FE70075A381 /* Vertex3D.swift */,
 				9D3347C72E6D11800075A381 /* Camera3D.swift */,
-				9D3347B62E6D0FE70075A381 /* Engine3D.swift */,
+				9DF9E4C62E7277CA004FD61D /* Engine */,
 			);
 			path = 3D;
+			sourceTree = "<group>";
+		};
+		9DF9E4C62E7277CA004FD61D /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9DF9E4C42E7277B3004FD61D /* Clip.swift */,
+				9D3347B62E6D0FE70075A381 /* Engine3D.swift */,
+			);
+			path = Engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D3347BC2E6D0FE70075A381 /* Scene3DView.swift in Sources */,
+				9DF9E4C52E7277B7004FD61D /* Clip.swift in Sources */,
 				9D3347C82E6D11840075A381 /* Camera3D.swift in Sources */,
 				9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */,
 				9D3347BD2E6D0FE70075A381 /* Engine3D.swift in Sources */,
