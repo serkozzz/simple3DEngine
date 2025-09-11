@@ -95,12 +95,12 @@
 			children = (
 				9D3347C42E6D10C60075A381 /* Extentions */,
 				9D3347B72E6D0FE70075A381 /* Object2D.swift */,
-				9D3347B62E6D0FE70075A381 /* Engine3D.swift */,
 				9D3347C92E6D120A0075A381 /* SceneNode3D.swift */,
 				9D3347CB2E6D1A270075A381 /* Scene3D.swift */,
 				9D3347B82E6D0FE70075A381 /* Object3D.swift */,
 				9D3347B92E6D0FE70075A381 /* Vertex3D.swift */,
 				9D3347C72E6D11800075A381 /* Camera3D.swift */,
+				9D3347B62E6D0FE70075A381 /* Engine3D.swift */,
 			);
 			path = 3D;
 			sourceTree = "<group>";

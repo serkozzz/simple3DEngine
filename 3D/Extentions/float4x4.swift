@@ -33,34 +33,6 @@ extension float4x4 {
         )
     }
     
-    init(rotationYXZ angles: SIMD3<Float>) {
-            let (x, y, z) = (angles.x, angles.y, angles.z)
-            let cosX = cos(x), sinX = sin(x)
-            let cosY = cos(y), sinY = sin(y)
-            let cosZ = cos(z), sinZ = sin(z)
-            
-            let rotY = float4x4(columns: (
-                SIMD4(cosY, 0, sinY, 0),
-                SIMD4(0, 1, 0, 0),
-                SIMD4(-sinY, 0, cosY, 0),
-                SIMD4(0, 0, 0, 1)
-            ))
-            let rotX = float4x4(columns: (
-                SIMD4(1, 0, 0, 0),
-                SIMD4(0, cosX, -sinX, 0),
-                SIMD4(0, sinX, cosX, 0),
-                SIMD4(0, 0, 0, 1)
-            ))
-            let rotZ = float4x4(columns: (
-                SIMD4(cosZ, -sinZ, 0, 0),
-                SIMD4(sinZ, cosZ, 0, 0),
-                SIMD4(0, 0, 1, 0),
-                SIMD4(0, 0, 0, 1)
-            ))
-            self = rotY * rotX * rotZ
-        }
-    
-    
     /// Стандартный lookAt (right-handed, column-major)
     init(lookFrom eye: SIMD3<Float>, to center: SIMD3<Float>, up worldUp: SIMD3<Float>) {
         let f = simd_normalize(center - eye)          // forward

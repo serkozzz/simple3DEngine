@@ -32,7 +32,6 @@ class Engine3D {
                     x: CGFloat((normalized.x + 1) * 0.5 * Float(screenSize.width)),
                     y: CGFloat((1 - normalized.y) * 0.5 * Float(screenSize.height))
                 )
-                
                 resultPoints.append(resultPoint)
             }
             result.append(Object2D(points: resultPoints))

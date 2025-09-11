@@ -88,5 +88,60 @@ extension Scene3D {
 
         return Scene3D(nodes: nodes, camera: .default)
     }()
+    
+    
+    nonisolated(unsafe) static let pyramid: Scene3D = {
+        // удобная функция для Object3D
+        func makeFace(_ positions: [SIMD3<Float>]) -> Object3D {
+            let vertexes = positions.map { Vertex3D(position: $0) }
+            return Object3D(vertexes: vertexes)
+        }
+
+        let apex = SIMD3<Float>(0, 1, 0) // вершина пирамиды (вверх)
+        
+        // Основание (квадрат на y = -1)
+        let base = makeFace([
+            SIMD3(-1, -1, -1),
+            SIMD3( 1, -1, -1),
+            SIMD3( 1, -1,  1),
+            SIMD3(-1, -1,  1)
+        ])
+
+        // 4 боковые треугольные грани
+        let front = makeFace([
+            SIMD3(-1, -1,  1),
+            SIMD3( 1, -1,  1),
+            apex
+        ])
+        
+        let back = makeFace([
+            SIMD3(-1, -1, -1),
+            SIMD3( 1, -1, -1),
+            apex
+        ])
+        
+        let left = makeFace([
+            SIMD3(-1, -1, -1),
+            SIMD3(-1, -1,  1),
+            apex
+        ])
+        
+        let right = makeFace([
+            SIMD3( 1, -1, -1),
+            SIMD3( 1, -1,  1),
+            apex
+        ])
+        
+        let nodes = [
+            SceneNode3D(object3D: base),
+            SceneNode3D(object3D: front),
+            SceneNode3D(object3D: back),
+            SceneNode3D(object3D: left),
+            SceneNode3D(object3D: right)
+        ]
+        
+        return Scene3D(nodes: nodes, camera: .default)
+    }()
+
 
 }

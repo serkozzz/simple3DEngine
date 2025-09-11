@@ -48,7 +48,7 @@ final class Camera3D {
         // Направление взгляда (front). При yaw=0,pitch=0 → (0,0,1), т.е. +Z
         let front = simd_normalize(SIMD3<Float>( sy*cp, sp, cy*cp ))
         let up    = SIMD3<Float>(0, 1, 0)
-
+        
         viewMatrix = float4x4(lookFrom: position, to: position + front, up: up)
     }
 
@@ -57,7 +57,7 @@ final class Camera3D {
     }
 
     nonisolated(unsafe) static let `default`: Camera3D = {
-        Camera3D(position: [0,0,-5], fovy: .pi/4, aspect: 1, near: 0.1, far: 100)
+        Camera3D(position: [0,0,-5], fovy: .pi/6, aspect: 1, near: 0.1, far: 100)
     }()
 }
 
