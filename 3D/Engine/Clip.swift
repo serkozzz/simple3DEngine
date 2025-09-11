@@ -4,69 +4,57 @@
 //
 //  Created by Sergey Kozlov on 11.09.2025.
 //
-
 import simd
-
-/// Отсечение в clip-space (после PV*M, до деления на w)
-final class Clip {
-
-    /// Плоскость фрустума: a*x + b*y + c*z + d*w >= 0  (внутри)
-    private struct Plane {
-        let a: Float, b: Float, c: Float, d: Float
-    }
-
-    /// OpenGL-совместимые 6 плоскостей: -w ≤ x,y,z ≤ w
+struct Clipper {
+    private struct Plane { let a: Float, b: Float, c: Float, d: Float }
     private static let planes: [Plane] = [
-        Plane(a:  1, b:  0, c:  0, d: 1), // w + x >= 0 (left)
-        Plane(a: -1, b:  0, c:  0, d: 1), // w - x >= 0 (right)
-        Plane(a:  0, b:  1, c:  0, d: 1), // w + y >= 0 (bottom)
-        Plane(a:  0, b: -1, c:  0, d: 1), // w - y >= 0 (top)
-        Plane(a:  0, b:  0, c:  1, d: 1), // w + z >= 0 (near)
-        Plane(a:  0, b:  0, c: -1, d: 1)  // w - z >= 0 (far)
+        Plane(a:  1, b:  0, c:  0, d: 1), // x >= -w
+        Plane(a: -1, b:  0, c:  0, d: 1), // x <=  w
+        Plane(a:  0, b:  1, c:  0, d: 1), // y >= -w (bottom)
+        Plane(a:  0, b: -1, c:  0, d: 1), // y <=  w (top)
+        Plane(a:  0, b:  0, c:  1, d: 1), // z >= -w (near)
+        Plane(a:  0, b:  0, c: -1, d: 1), // z <=  w (far)
     ]
+    private static let eps: Float = 1e-5
 
-    @inline(__always) private static func f(_ p: SIMD4<Float>, _ pl: Plane) -> Float {
+    @inline(__always) private static func eval(_ p: SIMD4<Float>, _ pl: Plane) -> Float {
         pl.a*p.x + pl.b*p.y + pl.c*p.z + pl.d*p.w
     }
-
     @inline(__always) private static func lerp(_ a: SIMD4<Float>, _ b: SIMD4<Float>, _ t: Float) -> SIMD4<Float> {
-        a + t * (b - a)
+        a + t*(b - a)
     }
 
-    /// Отсечь отрезок AB по шести плоскостям фрустума в clip-space.
-    /// - Returns: пара точек (A', B') в clip-space или nil, если целиком вне.
-    static func clipLine(_ A: SIMD4<Float>, _ B: SIMD4<Float>) -> (SIMD4<Float>, SIMD4<Float>)? {
-        var a = A, b = B
-        for pl in planes {
-            let fa = f(a, pl)
-            let fb = f(b, pl)
+    private static func clipPolygonAgainstPlane(_ polygon: [SIMD4<Float>], plane: Plane, debugName: String? = nil) -> [SIMD4<Float>] {
+        var output: [SIMD4<Float>] = []
+        guard !polygon.isEmpty else { return output }
 
-            if fa < 0, fb < 0 {
-                return nil // оба вне — выкидываем
+        let n = polygon.count
+        for i in 0..<n {
+            let S = polygon[i], E = polygon[(i+1) % n]
+            let fS = eval(S, plane), fE = eval(E, plane)
+            let Sinside = fS >= -eps
+            let Einside = fE >= -eps
+
+            if Sinside && Einside {
+                output.append(E)
+            } else if Sinside && !Einside {
+                let t = fS / (fS - fE)
+                output.append(lerp(S, E, t))
+            } else if !Sinside && Einside {
+                let t = fS / (fS - fE)
+                output.append(lerp(S, E, t))
+                output.append(E)
             }
-            if fa >= 0, fb >= 0 {
-                continue // оба внутри — ничего не делаем
-            }
-            // Один внутри, другой вне — пересекаем с плоскостью
-            // Ищем t: fa + t*(fb - fa) = 0  →  t = fa / (fa - fb)
-            let t = fa / (fa - fb)
-            let m = lerp(a, b, t)
-            if fa < 0 { a = m } else { b = m }
         }
-        return (a, b)
+        return output
     }
 
-    /// Утилита: клиппинг списка отрезков, заданного парами индексов.
-    /// points — вершины в clip-space, edges — пары индексов (i,j)
-    static func clipEdges(points: [SIMD4<Float>], edges: [(Int, Int)]) -> [(SIMD4<Float>, SIMD4<Float>)] {
-        var out: [(SIMD4<Float>, SIMD4<Float>)] = []
-        out.reserveCapacity(edges.count)
-        for (i, j) in edges {
-            guard i >= 0, j >= 0, i < points.count, j < points.count else { continue }
-            if let seg = clipLine(points[i], points[j]) {
-                out.append(seg)
-            }
+    static func clipPolygon(_ polygon: [SIMD4<Float>]) -> [SIMD4<Float>] {
+        var poly = polygon
+        for (idx, pl) in planes.enumerated() {
+            poly = clipPolygonAgainstPlane(poly, plane: pl, debugName: "\(idx)")
+            if poly.isEmpty { break }
         }
-        return out
+        return poly
     }
 }

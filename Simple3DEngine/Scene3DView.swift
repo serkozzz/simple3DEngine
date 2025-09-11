@@ -42,7 +42,7 @@ struct Scene3DView: View {
 
     func renderFrame() {
         guard let viewportSize else  { return }
-        let res = engine3D.objects2D(from: scene3D, screenSize: CGSize(width: viewportSize.width, height: viewportSize.width))
+        let res = engine3D.objects2D(from: scene3D, screenSize: CGSize(width: viewportSize.width, height: viewportSize.height))
         objects2D = res
     }
 

@@ -53,7 +53,7 @@ final class Camera3D {
 
     private func updatePerspectiveMatrix() {
         perspectiveMatrix = float4x4(
-            perspectiveProjection: fovy,
+            perspectiveGL: fovy,
             aspect: aspect,
             near: near,
             far: far
@@ -61,7 +61,7 @@ final class Camera3D {
     }
 
     nonisolated(unsafe) static let `default`: Camera3D = {
-        Camera3D(position: [0, 0, 5], fovy: .pi/6, aspect: 1, near: 0.5, far: 100)
+        Camera3D(position: [0, 0, 5], fovy: .pi/3, aspect: 1, near: 0.1, far: 100)
     }()
 }
 
