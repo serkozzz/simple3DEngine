@@ -66,8 +66,8 @@ struct Camera3DController: ViewModifier {
         DragGesture()
             .onChanged { value in
                 withAnimation(.easeInOut(duration: 0.1)) {
-                    camera.yaw -= Float(value.translation.width - dragOffset.width) * 0.01
-                    camera.pitch -= Float(value.translation.height - dragOffset.height) * 0.01
+                    camera.yaw += Float(value.translation.width - dragOffset.width) * 0.01
+                    camera.pitch += Float(value.translation.height - dragOffset.height) * 0.01
                     dragOffset = value.translation
                     onCameraChanged?()
                 }

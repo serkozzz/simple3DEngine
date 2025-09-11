@@ -59,4 +59,21 @@ extension float4x4 {
             ))
             self = rotY * rotX * rotZ
         }
+    
+    
+    /// Стандартный lookAt (right-handed, column-major)
+    init(lookFrom eye: SIMD3<Float>, to center: SIMD3<Float>, up worldUp: SIMD3<Float>) {
+        let f = simd_normalize(center - eye)          // forward
+        let s = simd_normalize(simd_cross(f, worldUp))// right
+        let u = simd_cross(s, f)                      // recalculated up
+
+        self = float4x4(
+            SIMD4<Float>( s.x,  u.x, -f.x, 0),
+            SIMD4<Float>( s.y,  u.y, -f.y, 0),
+            SIMD4<Float>( s.z,  u.z, -f.z, 0),
+            SIMD4<Float>(-simd_dot(s, eye),
+                        -simd_dot(u, eye),
+                         simd_dot(f, eye), 1)
+        )
+    }
 }

@@ -7,54 +7,57 @@
 
 import simd
 
-class Camera3D {
-    
-    var position: SIMD3<Float> {
-        didSet { updateViewMatrix() }
-    }
-    
-    var yaw: Float = 0 {  // Вращение вокруг Y (горизонт)
-        didSet { updateViewMatrix() }
-    }
-    
-    var pitch: Float = 0 { // Вращение вокруг X (вертикаль)
-        didSet { updateViewMatrix() }
-    }
-    
+
+final class Camera3D {
+    var position: SIMD3<Float> { didSet { updateViewMatrix() } }
+    var yaw: Float = 0   { didSet { updateViewMatrix() } } // вокруг Y (мир)
+    var pitch: Float = 0 { didSet { updateViewMatrix() } } // вокруг локального right
+
     private var fovy: Float
     private var aspect: Float
     private var near: Float
     private var far: Float
-    
+
     private(set) var viewMatrix = matrix_identity_float4x4
     private(set) var perspectiveMatrix = matrix_identity_float4x4
-    
+
     init(position: SIMD3<Float>, fovy: Float, aspect: Float, near: Float, far: Float) {
         self.position = position
         self.fovy = fovy
         self.aspect = aspect
         self.near = near
         self.far = far
-        
         updateViewMatrix()
         updatePerspectiveMatrix()
     }
-    
+
     func setAspect(aspect: Float) {
         self.aspect = aspect
         updatePerspectiveMatrix()
     }
+
     private func updateViewMatrix() {
-        let rotation = float4x4(rotationYXZ: SIMD3(-pitch, -yaw, 0))
-        let translation = float4x4(translation: -position)
-        self.viewMatrix = rotation * translation
+        // ограничим pitch, чтобы не «перекувыркнуться»
+        let lim: Float = .pi/2 - 0.001
+        if pitch >  lim { pitch =  lim }
+        if pitch < -lim { pitch = -lim }
+
+        let cp = cos(pitch), sp = sin(pitch)
+        let cy = cos(yaw),   sy = sin(yaw)
+
+        // Направление взгляда (front). При yaw=0,pitch=0 → (0,0,1), т.е. +Z
+        let front = simd_normalize(SIMD3<Float>( sy*cp, sp, cy*cp ))
+        let up    = SIMD3<Float>(0, 1, 0)
+
+        viewMatrix = float4x4(lookFrom: position, to: position + front, up: up)
     }
-    
+
     private func updatePerspectiveMatrix() {
-        self.perspectiveMatrix = float4x4(perspectiveProjection: fovy, aspect: aspect, near: near, far: far)
+        perspectiveMatrix = float4x4(perspectiveProjection: fovy, aspect: aspect, near: near, far: far)
     }
-    
+
     nonisolated(unsafe) static let `default`: Camera3D = {
-        return Camera3D(position: [0,0,-5], fovy: Float.pi / 4, aspect: 1, near: 0.1, far: 100)
+        Camera3D(position: [0,0,-5], fovy: .pi/4, aspect: 1, near: 0.1, far: 100)
     }()
 }
+
