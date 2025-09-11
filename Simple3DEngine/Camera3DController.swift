@@ -12,9 +12,16 @@ struct Camera3DController: ViewModifier {
     let camera: Camera3D
     let onCameraChanged: (() -> Void)?
     @State private var dragOffset: CGSize = .zero
-    @State private var camXZ = AnimatablePair<Float, Float>(0,0)
+    @State private var camXZ: AnimatablePair<Float, Float>
+    
+    init(camera: Camera3D, onCameraChanged: (() -> Void)?) {
+        self.camera = camera
+        self.onCameraChanged = onCameraChanged
+        _camXZ = State(initialValue: AnimatablePair(camera.position.x, camera.position.z))
+    }
     
     func body(content: Content) -> some View {
+        
         VStack {
             content
                 .gesture(
@@ -48,9 +55,8 @@ struct Camera3DController: ViewModifier {
             }
         }
     }
+    
     func moveCamera(dx: Float = 0, dz: Float = 0) {
-        camXZ = AnimatablePair(camera.position.x,
-            camera.position.z)
         withAnimation(.easeInOut(duration: 1)) {
             camXZ = AnimatablePair(camXZ.first + dx, camXZ.second + dz)
         }
