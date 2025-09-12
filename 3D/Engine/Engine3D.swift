@@ -21,15 +21,15 @@ class Engine3D {
             let obj = node.object3D
 
             // Исходный многоугольник (вершины в clip space)
-            let clipVerts = obj.vertexes.map { v -> SIMD4<Float> in
+            let notClippedVerts = obj.vertexes.map { v -> SIMD4<Float> in
                 let pos = SIMD4<Float>(v.position, 1)
                 let clip = P * (V * (M * pos))
-                print("y/w =", clip.y / clip.w)
+                //print("y/w =", clip.y / clip.w)
                 return clip
             }
 
             // Клиппинг всего многоугольника
-            let clipped = Clipper.clipPolygon(clipVerts)
+            let clipped = Clipper.clipPolygon(notClippedVerts)
             guard !clipped.isEmpty else { continue }
 
             // Деление на w и проекция в экран
