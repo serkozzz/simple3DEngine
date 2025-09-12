@@ -41,10 +41,10 @@ final class Camera3D {
         if pitch >  lim { pitch =  lim }
         if pitch < -lim { pitch = -lim }
 
+        //calculate front based on yaw and pitch (spherical coordinates)
         let cp = cos(pitch), sp = sin(pitch)
         let cy = cos(yaw),   sy = sin(yaw)
 
-        // Теперь "вперёд" = −Z при yaw=0, pitch=0
         let front = simd_normalize(SIMD3<Float>( sy*cp, sp, -cy*cp ))
         let up    = SIMD3<Float>(0, 1, 0)
 

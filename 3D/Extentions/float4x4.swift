@@ -40,18 +40,29 @@ extension float4x4 {
     /// Стандартный lookAt (right-handed, column-major)
     init(lookFrom eye: SIMD3<Float>, to center: SIMD3<Float>, up worldUp: SIMD3<Float>) {
         let f = simd_normalize(center - eye)          // forward
-        let s = simd_normalize(simd_cross(f, worldUp))// right
-        let u = simd_cross(s, f)                      // recalculated up
+        let r = simd_normalize(simd_cross(f, worldUp))// right
+        let u = simd_normalize(simd_cross(r, f))                   // recalculated up
         
         self = float4x4(
             columns: (
-                SIMD4( s.x,  u.x, -f.x, 0),
-                SIMD4( s.y,  u.y, -f.y, 0),
-                SIMD4( s.z,  u.z, -f.z, 0),
-                SIMD4(-simd_dot(s, eye),
+                SIMD4( r.x,  u.x, -f.x, 0),
+                SIMD4( r.y,  u.y, -f.y, 0),
+                SIMD4( r.z,  u.z, -f.z, 0),
+                SIMD4(-simd_dot(r, eye),
                                 -simd_dot(u, eye),
                                     simd_dot(f, eye), 1)
             )
         )
+        
+        //        let transformMatrix = float4x4(
+        //            columns: (
+        //                SIMD4( r.x,  r.y, r.z, 0),
+        //                SIMD4( u.x,  u.y, u.z, 0),
+        //                SIMD4( -f.x, -f.y, -f.z, 0),
+        //                SIMD4(eye.x, eye.y, eye.z, 1)
+        //            )
+        //        )
+        //
+        //        self = transformMatrix.inverse
     }
 }
