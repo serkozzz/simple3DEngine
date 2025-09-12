@@ -28,6 +28,7 @@ struct Scene3DView: View {
             }
             .onGeometryChange (for: CGSize.self, of: { proxy in proxy.size}) { size in
                 viewportSize = size
+                scene3D.camera.setAspect(aspect: Float(size.width / size.height))
                 renderFrame()
             }
         }

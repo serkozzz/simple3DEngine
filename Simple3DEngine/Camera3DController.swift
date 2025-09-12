@@ -68,10 +68,7 @@ struct Camera3DController: ViewModifier {
         
         let right = simd_normalize(simd_cross(forward, up))
 
-
-        // the reason of -1 for right axis: SwiftUI Oy looks down and I turn the final SwiftUI View upside down.
-        let d = (-1) * right * dx + forward * dz
-        
+        let d = right * dx + forward * dz
         
         withAnimation(.easeInOut(duration: 1)) {
             camXYZ = AnimatablePair(camXYZ.first + d.x, AnimatablePair(camXYZ.second.first + d.y, camXYZ.second.second + d.z))

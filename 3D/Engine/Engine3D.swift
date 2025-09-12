@@ -40,7 +40,6 @@ class Engine3D {
                     y: CGFloat(((ndc.y) * 0.5 + 0.5) * Float(screenSize.height)) // y инвертирован
                 )
             }
-
             result.append(Object2D(points: screenPoints))
         }
 
