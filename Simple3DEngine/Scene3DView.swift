@@ -25,7 +25,6 @@ struct Scene3DView: View {
                     ShapeFrom3D(objects2D: objects2D)
                         .trim(from: 0, to: trimEnd)
                         .stroke(.black)
-                        .background(.yellow)
                         .scaleEffect(x: 1, y: -1, anchor: .topLeading)
                         .offset(y: viewportSize.height)
                         .onAppear() {

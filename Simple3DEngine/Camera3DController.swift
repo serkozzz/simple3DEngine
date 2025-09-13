@@ -14,20 +14,29 @@ struct Camera3DController: ViewModifier {
     let onCameraChanged: (() -> Void)?
     @State private var dragOffset: CGSize = .zero
     @State private var camXYZ: AnimatablePair<Float, AnimatablePair<Float, Float>>
+    @State private var cameraMover: CameraMover3D
     
     init(camera: Camera3D, onCameraChanged: (() -> Void)?) {
         self.camera = camera
         self.onCameraChanged = onCameraChanged
+        self._cameraMover = State(wrappedValue: CameraMover3D(camera: camera, onCameraMoved: onCameraChanged))
+        
         _camXYZ = State(initialValue: AnimatablePair(camera.position.x, AnimatablePair(camera.position.y, camera.position.z)))
     }
     
     func body(content: Content) -> some View {
-        
-        VStack {
-            content
-                .gesture(
-                    dragGesture
-               )
+        print("Camera3DController.body")
+        return VStack {
+            ZStack(alignment: .bottomTrailing) {
+                content
+                    .contentShape(Rectangle())
+                    .gesture(
+                        dragGesture
+                    )
+                Joystick(delegate: cameraMover)
+                    .frame(width: 100, height: 100)
+            }
+            .background(.yellow)
             AnimatableEmitter(value: camXYZ) { newValue in
                 camera.position.x = newValue.first
                 camera.position.y = newValue.second.first
@@ -61,11 +70,11 @@ struct Camera3DController: ViewModifier {
     func moveCamera(dx: Float = 0, dz: Float = 0) {
         let inversedMatrix = camera.viewMatrix.inverse
 
+        
         let forward = (-1) * simd_normalize(SIMD3(inversedMatrix.columns.2.x,
                                            inversedMatrix.columns.2.y,
                                            inversedMatrix.columns.2.z))
         let up = SIMD3<Float>(0, 1, 0)
-        
         let right = simd_normalize(simd_cross(forward, up))
 
         let d = right * dx + forward * dz
@@ -95,4 +104,8 @@ extension View {
     func camera3DController(_ camera: Camera3D, onCameraChanged: (() -> Void)? = nil) -> some View {
         self.modifier(Camera3DController(camera: camera, onCameraChanged: onCameraChanged))
     }
+}
+
+#Preview {
+    Scene3DView()
 }

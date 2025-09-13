@@ -22,6 +22,8 @@
 		9DF9E4B92E712ADB004FD61D /* AnimatableEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */; };
 		9DF9E4C32E725767004FD61D /* Camera3DController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C22E725767004FD61D /* Camera3DController.swift */; };
 		9DF9E4C52E7277B7004FD61D /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C42E7277B3004FD61D /* Clip.swift */; };
+		9DF9E4C82E73BCE9004FD61D /* Joystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C72E73BCE9004FD61D /* Joystick.swift */; };
+		9DF9E4CA2E73C04F004FD61D /* CameraMover3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9E4C92E73C049004FD61D /* CameraMover3D.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		9DF9E4B82E712ADB004FD61D /* AnimatableEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableEmitter.swift; sourceTree = "<group>"; };
 		9DF9E4C22E725767004FD61D /* Camera3DController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera3DController.swift; sourceTree = "<group>"; };
 		9DF9E4C42E7277B3004FD61D /* Clip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
+		9DF9E4C72E73BCE9004FD61D /* Joystick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joystick.swift; sourceTree = "<group>"; };
+		9DF9E4C92E73C049004FD61D /* CameraMover3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraMover3D.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				9D3347CF2E6D1CBD0075A381 /* ShapeFrom3D.swift */,
 				9D3347B52E6D0FE70075A381 /* Scene3DView.swift */,
 				9DF9E4C22E725767004FD61D /* Camera3DController.swift */,
+				9DF9E4C72E73BCE9004FD61D /* Joystick.swift */,
+				9DF9E4C92E73C049004FD61D /* CameraMover3D.swift */,
 				9D3347BA2E6D0FE70075A381 /* Simple3DEngineApp.swift */,
 			);
 			path = Simple3DEngine;
@@ -195,11 +201,13 @@
 				9D3347BD2E6D0FE70075A381 /* Engine3D.swift in Sources */,
 				9D3347C62E6D10D50075A381 /* float4x4.swift in Sources */,
 				9D3347BE2E6D0FE70075A381 /* Object2D.swift in Sources */,
+				9DF9E4CA2E73C04F004FD61D /* CameraMover3D.swift in Sources */,
 				9D3347BF2E6D0FE70075A381 /* Object3D.swift in Sources */,
 				9D3347CA2E6D120F0075A381 /* SceneNode3D.swift in Sources */,
 				9D3347CC2E6D1A2B0075A381 /* Scene3D.swift in Sources */,
 				9D3347D02E6D1CBD0075A381 /* ShapeFrom3D.swift in Sources */,
 				9D3347C02E6D0FE70075A381 /* Vertex3D.swift in Sources */,
+				9DF9E4C82E73BCE9004FD61D /* Joystick.swift in Sources */,
 				9DF9E4C32E725767004FD61D /* Camera3DController.swift in Sources */,
 				9D3347C12E6D0FE70075A381 /* Simple3DEngineApp.swift in Sources */,
 			);
